@@ -94,8 +94,11 @@ export class Sequelize extends OriginSequelize {
         .map((key) => indexes.named[key])
         .concat(indexes.unnamed);
       const initOptions: InitOptions & { modelName } = {
-        ...(indexArray.length > 0 && { indexes: indexArray }),
         ...modelOptions,
+        indexes: [
+          ...modelOptions.indexes ?? [],
+          ...indexArray
+        ],
         modelName,
         sequelize: this,
       };
